@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dados dos Estados</title>
+</head>
+<body>
+  
+    <h1>Selecione um Estado</h1>
+    <form id="estadoForm" method="get">
+        <label for="estado">Escolha um estado:</label>
+        <select id="estado" name="estado" required>
+            {% for estado in data[0] %}
+                <option value="{{ estado.id }}" {% if estado.id == dataForm[0]|int %}selected{% endif %}>{{ estado.nome }}</option>
+            {%  endfor %}
+        </select>
+        {% if dataForm[0] %}
+            <br>
+            <label for="tipoVeiculo">Escolha o tipo do Veiculo:</label>
+            <select id="tipoVeiculo" name="tipoVeiculo">
+                    <option value="1"{% if 1 == dataForm[1]|int %}selected{% endif %}>Caminhoes</option>
+                    <option value="2"{% if 2 == dataForm[1]|int %}selected{% endif %}>Carros</option>
+                    <option value="3"{% if 3 == dataForm[1]|int %}selected{% endif %}>Motos</option>
+            </select>
+            {% if dataForm[1] %}
+                <br>
+                <label for="marca">Escolha a Marca do Veiculo:</label>
+                <select id="marca" name="marca">
+                    {% for marca in data[1] %}
+                        <option value="{{ marca.codigo }}" {% if marca.codigo == dataForm[2] %} selected {% endif %}>{{ marca.nome }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+            {% if dataForm[2] %}
+                <br>
+                <label for="modelo">Escolha a Modelo:</label>
+                <select id="modelo" name="modelo">
+                    {% for modelo in data[2] %}
+                        <option value="{{ modelo.codigo }}" {% if modelo.codigo == dataForm[3] %} selected {% endif %}>{{ modelo.nome }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        {% endif %}
+        <button type="submit">Enviar</button>
+    </form>
+    <br>    
+    <div id="infoEstado"></div>
+</body>
+</html>
