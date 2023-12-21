@@ -5,23 +5,29 @@
     <title>Dados dos Estados</title>
 </head>
 <body>
-  
     <h1>Selecione um Estado</h1>
+    
+   
+
     <form id="estadoForm" method="get">
+        <!-- SELECAO DE ESTADOS -->
         <label for="estado">Escolha um estado:</label>
         <select id="estado" name="estado" required>
             {% for estado in data[0] %}
                 <option value="{{ estado.id }}" {% if estado.id == dataForm[0]|int %}selected{% endif %}>{{ estado.nome }}</option>
             {%  endfor %}
         </select>
+        <!-- SE TIVER ESTADO SELECIONADO -->
         {% if dataForm[0] %}
             <br>
+            <!-- SELECAO DE TIPO DE VEICULOS -->
             <label for="tipoVeiculo">Escolha o tipo do Veiculo:</label>
             <select id="tipoVeiculo" name="tipoVeiculo">
                     <option value="1"{% if 1 == dataForm[1]|int %}selected{% endif %}>Caminhoes</option>
                     <option value="2"{% if 2 == dataForm[1]|int %}selected{% endif %}>Carros</option>
                     <option value="3"{% if 3 == dataForm[1]|int %}selected{% endif %}>Motos</option>
             </select>
+            <!-- SE TIVER TIPO DE VEICULO SELECIONADO -->
             {% if dataForm[1] %}
                 <br>
                 <label for="marca">Escolha a Marca do Veiculo:</label>
@@ -30,18 +36,36 @@
                         <option value="{{ marca.codigo }}" {% if marca.codigo == dataForm[2] %} selected {% endif %}>{{ marca.nome }}</option>
                     {% endfor %}
                 </select>
-            {% endif %}
-            {% if dataForm[2] %}
-                <br>
-                <label for="modelo">Escolha a Modelo:</label>
-                <select id="modelo" name="modelo">
-                    {% for modelo in data[2] %}
-                        <option value="{{ modelo.codigo }}" {% if modelo.codigo == dataForm[3] %} selected {% endif %}>{{ modelo.nome }}</option>
-                    {% endfor %}
-                </select>
+                <!-- SE TIVER MARCA DE VEICULO SELECIONADO -->
+                {% if dataForm[2] %}
+                    <br>
+                    <label for="modelo">Escolha a Modelo:</label>
+                    <select id="modelo" name="modelo">
+                        {% for modelo in data[2].modelos %}
+                            <option value="{{ modelo.codigo }}" {% if modelo.codigo == dataForm[3]|int %} selected {% endif %}>{{ modelo.nome }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <!-- SE TIVER MODELO DE VEICULO SELECIONADO -->
+                    {% if dataForm[3] %}
+                        <br>
+                        <label for="ano">Escolha o Ano:</label>
+                        <select id="ano" name="ano">
+                            {% for ano in data[3]%}
+                                <option value="{{ ano.codigo }}" {% if ano.codigo == dataForm[4] %} selected {% endif %}>{{ ano.nome }}</option>
+                            {% endfor %}
+                        </select>
+
+                        {% if dataForm[4] %}
+                            <p>Valor do Carro é: {{valor_sem}}</p>
+                            <p>VALOR DO IPVA É:{{data[4]}} </p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             {% endif %}
         {% endif %}
         <button type="submit">Enviar</button>
+        <button type="reset">Limpar</button>
     </form>
     <br>    
     <div id="infoEstado"></div>
